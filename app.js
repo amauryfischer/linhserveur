@@ -11,6 +11,6 @@ const server = http.createServer((req, res) => {
   res.end("Message sent")
 })
 
-server.listen(port, hostname, () => {
+server.listen(process.env.PORT || 3000, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`)
 })
