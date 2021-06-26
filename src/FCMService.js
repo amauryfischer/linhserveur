@@ -81,30 +81,30 @@ const sendFcmMessage = (fcmMessage) => {
  * Construct a JSON object that will be used to customize
  * the messages sent to iOS and Android devices.
  */
-function buildOverrideMessage() {
-  const fcmMessage = buildCommonMessage();
-  const apnsOverride = {
-    payload: {
-      aps: {
-        badge: 1,
-      },
-    },
-    headers: {
-      'apns-priority': '10',
-    },
-  };
+// function buildOverrideMessage() {
+//   const fcmMessage = buildCommonMessage();
+//   const apnsOverride = {
+//     payload: {
+//       aps: {
+//         badge: 1,
+//       },
+//     },
+//     headers: {
+//       'apns-priority': '10',
+//     },
+//   };
 
-  const androidOverride = {
-    notification: {
-      click_action: 'android.intent.action.MAIN',
-    },
-  };
+//   const androidOverride = {
+//     notification: {
+//       click_action: 'android.intent.action.MAIN',
+//     },
+//   };
 
-  fcmMessage.message.android = androidOverride;
-  fcmMessage.message.apns = apnsOverride;
+//   fcmMessage.message.android = androidOverride;
+//   fcmMessage.message.apns = apnsOverride;
 
-  return fcmMessage;
-}
+//   return fcmMessage;
+// }
 
 /**
  * Construct a JSON object that will be used to define the
