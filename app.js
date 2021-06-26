@@ -1,5 +1,5 @@
 const http = require("http")
-const { buildCommonMessage, sendFcmMessage } = require("./src/FCMService")
+var FCMService = require("./src/FCMService")
 
 const hostname = "0.0.0.0"
 const port = 3000
@@ -7,7 +7,7 @@ const port = 3000
 const server = http.createServer((req, res) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "text/plain")
-  sendFcmMessage(buildCommonMessage())
+  FCMService.sendFcmMessage(FCMService.buildCommonMessage())
   res.end("Message sent")
 })
 
