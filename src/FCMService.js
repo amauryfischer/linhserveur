@@ -7,7 +7,7 @@
  * a badge is added to messages that are sent to iOS devices.
  */
 const https = require("https")
-const { google } = require("googleapis")
+var googleapis = require("googleapis")
 
 const PROJECT_ID = "lovelinh-41fa5"
 const HOST = "fcm.googleapis.com"
@@ -22,7 +22,7 @@ const SCOPES = [MESSAGING_SCOPE]
 function getAccessToken() {
   return new Promise(function (resolve, reject) {
     const key = require("./key.json")
-    const jwtClient = new google.auth.JWT(
+    const jwtClient = new googleapis.google.auth.JWT(
       key.client_email,
       null,
       key.private_key,
