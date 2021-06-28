@@ -34,7 +34,7 @@ const server = http.createServer((req, res) => {
 
   if (req.method == "POST") {
     req.on("data", function (data) {
-      const data2 = qs.parse(buffer.toString())
+      const data2 = qs.parse(data.toString())
       console.log("Data: ", data2)
     })
   }
