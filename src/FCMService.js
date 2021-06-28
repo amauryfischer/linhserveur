@@ -17,7 +17,7 @@ const SCOPES = [MESSAGING_SCOPE]
 const key = require("./key.json")
 const sendMessageAdmin = ({ message, title }) => {
   // Initialize the app with a service account, granting admin privileges
-  const message = {
+  const message2 = {
     topic: "/topics/love-channel",
     notification: {
       title,
@@ -29,7 +29,7 @@ const sendMessageAdmin = ({ message, title }) => {
   // registration token.
   admin
     .messaging()
-    .send(message)
+    .send(message2)
     .then((response) => {
       // Response is a message ID string.
       console.log("Successfully sent message:", response)
