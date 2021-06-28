@@ -34,8 +34,8 @@ const server = http.createServer((req, res) => {
 
   if (req.method == "POST") {
     req.on("data", function (data) {
-      const data = qs.parse(buffer.toString())
-      console.log("Data: ", data)
+      const data2 = qs.parse(buffer.toString())
+      console.log("Data: ", data2)
     })
   }
   res.end("Message sent")
