@@ -12,9 +12,8 @@ admin.initializeApp({
   credential: admin.credential.cert(key),
 })
 const registrationTokens = [
-  "ca8v83aTTqGVvWRN7xXaPb:APA91bHS2eo2AarfUxG4G3Bjft2WwFdcraUggSjtQBqTJmYt0OUkF-4oK9dSNiteA3gsiaIBsrcyZjySmR96a2PF6pcpbwtjHbijVImH9GLOjL9DhLGixUzsAqgFI1sWdKqQf7H7dCkO",
-  "drI6jInJQISAdp8_NA1_0H:APA91bGgYwxnguR9bOmqS0zL1qN-Et1icULqdJgZ79exHm5DI0lPoIvcUVTMyUBjSl4ZOAmB95y1bElN-1xmYIMV0nhAKHxTjC75GZk15VJKXkr4Hnrx3Ac9Ym_IlLB-cf4U723-dW-o",
-  "ffBptz2CTnmSauu7j-4Q5T:APA91bFaLyPm-L_-Twq873_qvf5r-aBdP3DUUklSF0l3m1O7pyl9_MJFP6CXNWdXHm6_hp1Sr-9kIjVlDRiQ6R08Hd4hYA5ec-OGyVbWPx7reAX93gp54n7q10kwdrtHQ-QLA-XWHnPA",
+  "c22QdfvmSkWi3i2Hn_XeRt:APA91bHy4oQPdBXl7iQfU3klx4syzEd8HpyktrqnaVJ3coyNr2_nmQmuAvOxoHQ-JegF0WvuwbSItH4imAKCeJzyvM9Ox40xIFi0xdM0aYybCPJA-LmBMdvRh2WbFdEl0oEiyOX6hCev",
+  "cnxzeBWKTe-SxVgE1tb60k:APA91bHx4Ywr0av_a1vuHSzrvSHrTPbDWEgOPMwD8i2APzohb1OapsoIkPWphvUkYie-0m-RckPnTAzIy97YeniHPak0XxdLemykLewsLNGlD67Mki2IEw5IsKY9RHt407gl6gG3HrKA",
 ]
 
 admin
