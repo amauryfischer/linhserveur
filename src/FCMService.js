@@ -7,30 +7,53 @@
  * a badge is added to messages that are sent to iOS devices.
  */
 const https = require("https")
-const googleapis = require("googleapis")
-
+const { google } = require("googleapis")
+const admin = require("firebase-admin")
 const PROJECT_ID = "lovelinh-41fa5"
 const HOST = "fcm.googleapis.com"
-const PATH = `/v1/projects/${PROJECT_ID}/messages:send`
+const PATH = "/v1/projects/" + PROJECT_ID + "/messages:send"
 const MESSAGING_SCOPE = "https://www.googleapis.com/auth/firebase.messaging"
 const SCOPES = [MESSAGING_SCOPE]
+const key = require("./key.json")
+const sendMessageAdmin = () => {
+  // Initialize the app with a service account, granting admin privileges
+  const message = {
+    topic: "/topics/love-channel",
+    notification: {
+      title: "FCM Notification",
+      body: "Notification from FCM",
+    },
+  }
+
+  // Send a message to the device corresponding to the provided
+  // registration token.
+  admin
+    .messaging()
+    .send(message)
+    .then((response) => {
+      // Response is a message ID string.
+      console.log("Successfully sent message:", response)
+    })
+    .catch((error) => {
+      console.log("Error sending message:", error)
+    })
+}
 
 /**
  * Get a valid access token.
  */
 // [START retrieve_access_token]
 function getAccessToken() {
-  return new Promise((resolve, reject) => {
-    // eslint-disable-next-line global-require
+  return new Promise(function (resolve, reject) {
     const key = require("./key.json")
-    const jwtClient = new googleapis.google.auth.JWT(
+    const jwtClient = new google.auth.JWT(
       key.client_email,
       null,
       key.private_key,
       SCOPES,
       null,
     )
-    jwtClient.authorize((err, tokens) => {
+    jwtClient.authorize(function (err, tokens) {
       if (err) {
         reject(err)
         return
@@ -46,28 +69,28 @@ function getAccessToken() {
  *
  * @param {object} fcmMessage will make up the body of the request.
  */
-const sendFcmMessage = (fcmMessage) => {
-  getAccessToken().then((accessToken) => {
+function sendFcmMessage(fcmMessage) {
+  getAccessToken().then(function (accessToken) {
     const options = {
       hostname: HOST,
       path: PATH,
       method: "POST",
       // [START use_access_token]
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: "Bearer " + accessToken,
       },
       // [END use_access_token]
     }
 
-    const request = https.request(options, (resp) => {
+    const request = https.request(options, function (resp) {
       resp.setEncoding("utf8")
-      resp.on("data", (data) => {
+      resp.on("data", function (data) {
         console.log("Message sent to Firebase for delivery, response:")
         console.log(data)
       })
     })
 
-    request.on("error", (err) => {
+    request.on("error", function (err) {
       console.log("Unable to send message to Firebase")
       console.log(err)
     })
@@ -76,55 +99,54 @@ const sendFcmMessage = (fcmMessage) => {
     request.end()
   })
 }
-
-/**
- * Construct a JSON object that will be used to customize
- * the messages sent to iOS and Android devices.
- */
-// function buildOverrideMessage() {
-//   const fcmMessage = buildCommonMessage();
-//   const apnsOverride = {
-//     payload: {
-//       aps: {
-//         badge: 1,
-//       },
-//     },
-//     headers: {
-//       'apns-priority': '10',
-//     },
-//   };
-
-//   const androidOverride = {
-//     notification: {
-//       click_action: 'android.intent.action.MAIN',
-//     },
-//   };
-
-//   fcmMessage.message.android = androidOverride;
-//   fcmMessage.message.apns = apnsOverride;
-
-//   return fcmMessage;
-// }
-
 /**
  * Construct a JSON object that will be used to define the
  * common parts of a notification message that will be sent
  * to any app instance subscribed to the news topic.
  */
-const buildCommonMessage = () => ({
-  message: {
-    topic: "love-channel",
+function buildCommonMessage() {
+  return {
+    message: {
+      topic: "love-channel",
+      notification: {
+        title: "FCM Notification",
+        body: "Notification from FCM",
+      },
+    },
+  }
+}
+/**
+ * Construct a JSON object that will be used to customize
+ * the messages sent to iOS and Android devices.
+ */
+function buildOverrideMessage() {
+  const fcmMessage = buildCommonMessage()
+  const apnsOverride = {
+    payload: {
+      aps: {
+        badge: 1,
+      },
+    },
+    headers: {
+      "apns-priority": "10",
+    },
+  }
+
+  const androidOverride = {
     notification: {
-      title: "FCM Notification",
-      body: "Notification from FCM",
+      click_action: "android.intent.action.MAIN",
     },
-    android: {
-      priority: "high",
-    },
-  },
-})
+  }
+
+  fcmMessage["message"]["android"] = androidOverride
+  fcmMessage["message"]["apns"] = apnsOverride
+
+  return fcmMessage
+}
 
 module.exports = {
+  sendMessageAdmin,
+  buildOverrideMessage,
   buildCommonMessage,
   sendFcmMessage,
 }
