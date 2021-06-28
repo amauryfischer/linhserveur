@@ -32,8 +32,8 @@ const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "text/plain")
   FCMService.sendMessageAdmin()
 
-  if (request.method == "POST") {
-    request.on("data", function (data) {
+  if (req.method == "POST") {
+    req.on("data", function (data) {
       console.log("data", data)
     })
   }
