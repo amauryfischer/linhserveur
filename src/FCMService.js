@@ -15,13 +15,13 @@ const PATH = "/v1/projects/" + PROJECT_ID + "/messages:send"
 const MESSAGING_SCOPE = "https://www.googleapis.com/auth/firebase.messaging"
 const SCOPES = [MESSAGING_SCOPE]
 const key = require("./key.json")
-const sendMessageAdmin = () => {
+const sendMessageAdmin = ({ message, title }) => {
   // Initialize the app with a service account, granting admin privileges
   const message = {
     topic: "/topics/love-channel",
     notification: {
-      title: "FCM Notification",
-      body: "Notification from FCM",
+      title,
+      body: message,
     },
   }
 

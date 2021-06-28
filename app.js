@@ -30,12 +30,12 @@ admin
 const server = http.createServer((req, res) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "text/plain")
-  FCMService.sendMessageAdmin()
 
   if (req.method == "POST") {
     req.on("data", function (data) {
       const data2 = qs.parse(data.toString())
       console.log("Data: ", data2)
+      FCMService.sendMessageAdmin(data2["data"])
     })
   }
   res.end("Message sent")
