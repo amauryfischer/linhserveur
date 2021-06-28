@@ -31,7 +31,12 @@ const server = http.createServer((req, res) => {
   res.statusCode = 200
   res.setHeader("Content-Type", "text/plain")
   FCMService.sendMessageAdmin()
-  //FCMService.sendFcmMessage(FCMService.buildCommonMessage())
+
+  if (request.method == "POST") {
+    request.on("data", function (data) {
+      console.log("data", data)
+    })
+  }
   res.end("Message sent")
 })
 
