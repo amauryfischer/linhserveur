@@ -33,9 +33,11 @@ const server = http.createServer((req, res) => {
 
   if (req.method == "POST") {
     req.on("data", function (data) {
-      const data2 = qs.parse(data.toString())
-      console.log("Data: ", JSON.parse(data2))
-      FCMService.sendMessageAdmin(JSON.parse(data2)["data"])
+      // let data2 = qs.parse(data.toString())
+      // data2 = JSON.stringify(data2)
+      // data2 = JSON.parse(JSON.parse(data2))
+      let data2 = JSON.parse(data.toString())
+      FCMService.sendMessageAdmin(data2["data"])
     })
   }
   res.end("Message sent")

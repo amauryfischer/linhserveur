@@ -24,6 +24,7 @@ const sendMessageAdmin = ({ message, title }) => {
       body: message,
     },
   }
+  console.log(JSON.stringify(message2, null, 2))
 
   // Send a message to the device corresponding to the provided
   // registration token.
