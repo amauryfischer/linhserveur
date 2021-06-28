@@ -5,7 +5,7 @@ const admin = require("firebase-admin")
 const key = require("./src/key.json")
 const log = Debug("debugger")
 Debug.enable("*")
-
+const qs = require("querystring")
 const hostname = "0.0.0.0"
 const port = 3000
 admin.initializeApp({
@@ -34,7 +34,8 @@ const server = http.createServer((req, res) => {
 
   if (req.method == "POST") {
     req.on("data", function (data) {
-      console.log("data", data)
+      const data = qs.parse(buffer.toString())
+      console.log("Data: ", data)
     })
   }
   res.end("Message sent")

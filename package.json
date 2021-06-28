@@ -4,7 +4,8 @@
     "expo": "^41.0.1",
     "express": "^4.17.1",
     "firebase-admin": "^9.10.0",
-    "googleapis": "^78.0.0"
+    "googleapis": "^78.0.0",
+    "querystring": "^0.2.1"
   },
   "name": "firebaselinh",
   "version": "1.0.0",
