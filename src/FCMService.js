@@ -6,14 +6,14 @@
  * a notification message (display notification) with platform specific customizations. For example,
  * a badge is added to messages that are sent to iOS devices.
  */
-const https = require('https');
-const googleapis = require('googleapis');
+const https = require("https")
+const googleapis = require("googleapis")
 
-const PROJECT_ID = 'lovelinh-41fa5';
-const HOST = 'fcm.googleapis.com';
-const PATH = `/v1/projects/${PROJECT_ID}/messages:send`;
-const MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
-const SCOPES = [MESSAGING_SCOPE];
+const PROJECT_ID = "lovelinh-41fa5"
+const HOST = "fcm.googleapis.com"
+const PATH = `/v1/projects/${PROJECT_ID}/messages:send`
+const MESSAGING_SCOPE = "https://www.googleapis.com/auth/firebase.messaging"
+const SCOPES = [MESSAGING_SCOPE]
 
 /**
  * Get a valid access token.
@@ -22,22 +22,22 @@ const SCOPES = [MESSAGING_SCOPE];
 function getAccessToken() {
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line global-require
-    const key = require('./key.json');
+    const key = require("./key.json")
     const jwtClient = new googleapis.google.auth.JWT(
       key.client_email,
       null,
       key.private_key,
       SCOPES,
       null,
-    );
+    )
     jwtClient.authorize((err, tokens) => {
       if (err) {
-        reject(err);
-        return;
+        reject(err)
+        return
       }
-      resolve(tokens.access_token);
-    });
-  });
+      resolve(tokens.access_token)
+    })
+  })
 }
 // [END retrieve_access_token]
 
@@ -51,31 +51,31 @@ const sendFcmMessage = (fcmMessage) => {
     const options = {
       hostname: HOST,
       path: PATH,
-      method: 'POST',
+      method: "POST",
       // [START use_access_token]
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
       // [END use_access_token]
-    };
+    }
 
     const request = https.request(options, (resp) => {
-      resp.setEncoding('utf8');
-      resp.on('data', (data) => {
-        console.log('Message sent to Firebase for delivery, response:');
-        console.log(data);
-      });
-    });
+      resp.setEncoding("utf8")
+      resp.on("data", (data) => {
+        console.log("Message sent to Firebase for delivery, response:")
+        console.log(data)
+      })
+    })
 
-    request.on('error', (err) => {
-      console.log('Unable to send message to Firebase');
-      console.log(err);
-    });
+    request.on("error", (err) => {
+      console.log("Unable to send message to Firebase")
+      console.log(err)
+    })
 
-    request.write(JSON.stringify(fcmMessage));
-    request.end();
-  });
-};
+    request.write(JSON.stringify(fcmMessage))
+    request.end()
+  })
+}
 
 /**
  * Construct a JSON object that will be used to customize
@@ -113,15 +113,18 @@ const sendFcmMessage = (fcmMessage) => {
  */
 const buildCommonMessage = () => ({
   message: {
-    topic: 'high-priority',
+    topic: "love-channel",
     notification: {
-      title: 'FCM Notification',
-      body: 'Notification from FCM',
+      title: "FCM Notification",
+      body: "Notification from FCM",
+    },
+    android: {
+      priority: "high",
     },
   },
-});
+})
 
 module.exports = {
   buildCommonMessage,
   sendFcmMessage,
-};
+}
